@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <meta charset="UTF-8">
+    <title>AI X Hunter</title>
+
+    <link rel="apple-touch-icon" sizes="180x180" href="images/favicons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="images/favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="images/favicons/favicon-16x16.png">
+    <link rel="manifest" href="images/favicons/site.webmanifest">
+    <link rel="mask-icon" href="images/favicons/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="style.css">
+
+  </head>
+
+  <body>
+
+    <div id="main_container">
+
+      <div id="main_title">
+        <h1>AI X Hunter</h1>
+      </div>
+
+      <div id="main_input" class="flex-col-start-centered">
+
+        <!-- <form method="post" enctype="multipart/form-data"> -->
+
+          <div class="flex-col-start-centered">
+
+            <div class="tab_component">
+
+              <div class="tab_control flex-row-between-centered">
+
+                <p class="tab_choice active" onclick="tabChoose(this)" data-choice="file">From file</p>
+                <p class="tab_choice" onclick="tabChoose(this)" data-choice="url">From url</p>
+
+              </div>
+
+              <div class="tab_display">
+
+                <input id="imgInp_file"
+                       type="file"
+                       name="image"
+                       accept="image/png, image/jpeg"
+                       data-choice="file"
+                       onchange="previewImage(this, 'file')">
+
+                <input id="imgInp_url"
+                       class="hidden"
+                       type="url"
+                       name="url"
+                       placeholder="https://example.com"
+                       pattern="https://.*" size="30"
+                       data-choice="url"
+                       onchange="previewImage(this, 'url')">
+
+              </div>
+
+            </div>
+
+            <div id="image_preview_container">
+
+              <div id="image_preview_h" class="flex-row-start-centered">
+
+                <div id="image_preview_h_left" class="flex-centered">
+
+                  <div id="spinner" class="spinner-border text-light hidden" role="status">
+                    <span class="sr-only">Loading...</span>
+                  </div>
+
+                </div>
+
+                <div id="image_preview_h_right"></div>
+
+              </div>
+
+              <img id="imgPrev" src="#" alt="" />
+
+            </div>
+
+          </div>
+
+          <div id="main_input_submit" class="flex-centered">
+            <button class="button_submit">Submit</button>
+          </div>
+
+        <!-- </form> -->
+
+      </div>
+
+      <div id="main_result" class="flex-centered">
+
+        <p id="main_result_display"></p>
+
+      </div>
+
+    </div>
+
+    <!---------------->
+    <!-- JAVASCRIPT -->
+    <!---------------->
+
+    <script src='script.js'></script>
+
+  </body>
+
+</html>

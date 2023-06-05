@@ -1,0 +1,163 @@
+/*********/
+/* UTILS */
+/*********/
+
+.hidden {
+  display: none !important;
+}
+
+
+/***********/
+/* BUTTONS */
+/***********/
+
+.button_submit {
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bolder;
+  background-color: white;
+  color: #545B77;
+  border: 1px solid white;
+  border-radius: 5px;
+  transition: all 0.5s ease-in-out;
+}
+
+.button_submit:hover {
+  background-color: #545B77;
+  color: white;
+}
+
+/*************/
+/* FLEXBOXES */
+/*************/
+
+.flex-centered {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.flex-row-start-centered {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.flex-row-between-centered {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.flex-col-start-centered {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+
+/*****************/
+/* TAB COMPONENT */
+/*****************/
+
+.tab_component {
+  width: 300px;
+}
+
+.tab_choice {
+  width: 50%;
+  padding: 20px;
+  margin-bottom: 50px;
+  text-align: center;
+  color: white;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+}
+
+.tab_choice.active {
+  font-weight: bolder;
+  border-bottom: 2px solid white;
+}
+
+
+/* ***************/
+/* IMAGE PREVIEW */
+/* ***************/
+
+#image_preview_container {
+  margin: 50px 0;
+  position: relative;
+}
+
+#imgPrev {
+  max-height: 300px;
+}
+
+#image_preview_h {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 10;
+}
+
+#image_preview_h_left.loading {
+  background: rgba(57, 57, 57, 0.5);
+}
+
+#image_preview_h_left, #image_preview_h_right {
+  height: 100%;
+  width: 0;
+  transition: width 2s linear;
+}
+
+#image_preview_h_left.active {
+  width: 100%;
+}
+
+#image_preview_h_right.active {
+  height: 100%;
+  width: 0;
+  border: 1px solid rgba(255, 0, 0, 1);
+  box-shadow: 0 0 10px red;
+}
+
+#spinner {
+  width: 50px;
+  height: 50px;
+}
+
+
+/********/
+/* MAIN */
+/********/
+
+#main_container {
+  min-height: 100vh;
+  background-color: #545B77;
+}
+
+#main_title, #main_input {
+  display: flex;
+  justify-content: center;
+}
+
+#main_title > h1 {
+  color: white;
+  padding: 50px 0;
+}
+
+#main_input_submit {
+  margin: 20px 0;
+}
+
+#main_result_display {
+  width: fit-content;
+  margin: 20px 0;
+  font-size: 32px;
+  font-weight: bolder;
+  color:white;
+}
