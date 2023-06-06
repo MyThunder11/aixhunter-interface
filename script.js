@@ -15,7 +15,7 @@ const tabChoose = (element) => {
     }
   })
 
-  tab_container.querySelector('.tab_display').querySelectorAll("input").forEach((el) => {
+  tab_container.querySelector('.tab_display').querySelectorAll(".tab_child").forEach((el) => {
     if (el.dataset.choice == choice) {
       el.classList.remove('hidden')
     } else {
@@ -54,7 +54,11 @@ const previewImage = (input, mode) => {
 /////////////////
 
 main_input_submit.onclick = evt => {
-  horizontalSweep()
+  loadingResult(true)
+
+  setTimeout(() => {
+    displayResult('fake')
+  }, 1000);
 }
 
 
@@ -62,24 +66,15 @@ main_input_submit.onclick = evt => {
 // RESULT DISPLAY //
 ////////////////////
 
-const horizontalSweep = () => {
-  const divLeft = document.getElementById('image_preview_h_left')
-  const divRight = document.getElementById('image_preview_h_right')
-  divLeft.classList.add('active', 'loading')
-  divRight.classList.add('active')
-  setTimeout(() => {
-    divRight.classList.remove('active')
-    loadingResult()
-    setTimeout(() => {
-      loadingResult()
-      displayResult('fake')
-    }, 2000);
-  }, 2000);
-}
+const loadingResult = (bool) => {
+  button = document.getElementById('submit_button')
 
-const loadingResult = () => {
-  spinner = document.getElementById('spinner')
-  spinner.classList.toggle('hidden')
+  if (bool) {
+    document.getElementById('main_result_display').innerHTML = ""
+    button.innerHTML = '<div id="spinner" class="spinner-sm spinner-border" role="status"><span class="sr-only">Loading...</span></div>'
+  } else {
+    button.innerHTML = 'Submit'
+  }
 }
 
 const displayResult = (result) => {
@@ -87,6 +82,8 @@ const displayResult = (result) => {
 
   setTimeout(() => {
     txt = `This image is a ${result}`
+
+    loadingResult(false)
     typeWriter()
   }, 1000);
 }
@@ -105,5 +102,40 @@ function typeWriter() {
     document.getElementById('main_result_display').innerHTML += txt.charAt(i);
     i++;
     setTimeout(typeWriter, speed);
+  } else {
+    i = 0
   }
+}
+
+////////////////////
+// RANDOM PICTURE //
+////////////////////
+
+random_list = [1,2,3,4,5]
+
+const getRandom = () => {
+  document.querySelectorAll('.random_content').forEach(el=>el.classList.add('hidden'));
+  loader = document.getElementById('random_content_loader')
+
+  loader.classList.remove('hidden')
+
+  if (Math.random() >= 0.66) {
+    ind = Math.floor(Math.random() * random_list.length)
+    target = document.querySelector(`[data-randint="${random_list[ind]}"]`)
+    delete random_list[ind];
+  } else {
+    target = document.getElementById('default_random_content')
+    target_image = target.querySelector('img')
+    target_image.src = "https://thispersondoesnotexist.com?" + new Date().getTime();
+  }
+
+  if (target == null) {
+    getRandom()
+  }
+
+  setTimeout(() => {
+    loader.classList.add('hidden')
+    target.classList.remove('hidden')
+  }, 1000);
+
 }

@@ -17,7 +17,7 @@
     <!-- Bootstrap -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
 
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style/style.css">
 
   </head>
 
@@ -33,7 +33,7 @@
 
         <!-- <form method="post" enctype="multipart/form-data"> -->
 
-          <div class="flex-col-start-centered">
+          <div id="main_display" class="flex-col-start-centered">
 
             <div class="tab_component">
 
@@ -41,12 +41,14 @@
 
                 <p class="tab_choice active" onclick="tabChoose(this)" data-choice="file">From file</p>
                 <p class="tab_choice" onclick="tabChoose(this)" data-choice="url">From url</p>
+                <p class="tab_choice" onclick="tabChoose(this)" data-choice="random">Examples</p>
 
               </div>
 
-              <div class="tab_display">
+              <div class="tab_display flex-centered">
 
                 <input id="imgInp_file"
+                       class="tab_child"
                        type="file"
                        name="image"
                        accept="image/png, image/jpeg"
@@ -54,7 +56,7 @@
                        onchange="previewImage(this, 'file')">
 
                 <input id="imgInp_url"
-                       class="hidden"
+                       class="tab_child hidden"
                        type="url"
                        name="url"
                        placeholder="https://example.com"
@@ -62,25 +64,58 @@
                        data-choice="url"
                        onchange="previewImage(this, 'url')">
 
+                <div id="imgInp_random"
+                     class="tab_child hidden"
+                     data-choice="random">
+
+                    <div class="flex-col-start-centered">
+
+                       <div id="default_random_content" class="random_content flex-centered">
+                          <img src="https://thispersondoesnotexist.com/" alt="Random person">
+                       </div>
+
+                       <div id="random_content_loader" class="random_content flex-centered hidden">
+                          <div id="spinner" class="spinner-lg spinner-border text-light" role="status">
+                            <span class="sr-only">Loading...</span>
+                          </div>
+                       </div>
+
+                       <div class="random_content flex-centered hidden"
+                            data-randint="1">
+                         <img src="assets/pictures/arthur.jpeg" alt="Arthur">
+                       </div>
+                       <div class="random_content flex-centered hidden"
+                            data-randint="2">
+                         <img src="assets/pictures/charlotte.jpg" alt="Charlotte">
+                       </div>
+                       <div class="random_content flex-centered hidden"
+                            data-randint="3">
+                         <img src="assets/pictures/felipe.jpeg" alt="Felipe">
+                       </div>
+                       <div class="random_content flex-centered hidden"
+                            data-randint="4">
+                         <img src="assets/pictures/marguerite.jpeg" alt="Marguerite">
+                       </div>
+                       <div class="random_content flex-centered hidden"
+                            data-randint="2">
+                         <img src="assets/pictures/romain.jpeg" alt="Romain">
+                       </div>
+
+                    </div>
+
+                    <div id="random_content_button" class="flex-centered">
+                      <button class="grey_button" onclick="getRandom()">Get random image</button>
+                    </div>
+
+                  </div>
+
+                </div>
+
               </div>
 
             </div>
 
             <div id="image_preview_container">
-
-              <div id="image_preview_h" class="flex-row-start-centered">
-
-                <div id="image_preview_h_left" class="flex-centered">
-
-                  <div id="spinner" class="spinner-border text-light hidden" role="status">
-                    <span class="sr-only">Loading...</span>
-                  </div>
-
-                </div>
-
-                <div id="image_preview_h_right"></div>
-
-              </div>
 
               <img id="imgPrev" src="#" alt="" />
 
@@ -89,16 +124,16 @@
           </div>
 
           <div id="main_input_submit" class="flex-centered">
-            <button class="button_submit">Submit</button>
+            <button id="submit_button" class="grey_button">Submit</button>
           </div>
 
         <!-- </form> -->
 
-      </div>
+        <div id="main_result" class="flex-centered">
 
-      <div id="main_result" class="flex-centered">
+          <p id="main_result_display"></p>
 
-        <p id="main_result_display"></p>
+        </div>
 
       </div>
 
