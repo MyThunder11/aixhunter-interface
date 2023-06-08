@@ -31,7 +31,6 @@ const tabChoose = (element) => {
 // IMAGE PREVIEW //
 ///////////////////
 
-var mode = 'file'
 
 const previewImage = (input, mode) => {
   if (mode == 'file') {
@@ -40,11 +39,7 @@ const previewImage = (input, mode) => {
       imgPrev.src = URL.createObjectURL(file)
     }
   } else {
-    fetch(input.value)
-      .then(res => res.blob())
-      .then(blob => {
-        imgPrev.src = URL.createObjectURL(blob);
-    });
+    imgPrev.src = input.value
   }
 }
 
@@ -53,24 +48,53 @@ const previewImage = (input, mode) => {
 // FILE SUBMIT //
 /////////////////
 
-main_input_submit.onclick = evt => {
+async function upload(formData) {
+  try {
+    const response = await fetch("http://127.0.0.1:8000/", {
+      method: "POST",
+      body: formData,
+      mode: 'cors'
+    });
+
+    const result = await response.json();
+    console.log("Success:", result);
+
+    result['Prediction'] == 1 ? displayResult('real picture') : displayResult('fake')
+  } catch (error) {
+    console.error("Error:", error);
+  }
+}
+
+const sendData = () => {
+  page = 'analyze'
+
   loadingResult(true)
 
-  setTimeout(() => {
-    displayResult('fake')
-  }, 1000);
+  input = document.querySelector('input:not(.hidden)')
+  formData = new FormData()
+
+  if (input.type == 'file') {
+    formData.append("file", input.files[0]);
+  } else {
+    formData.append("url", input.value);
+  }
+
+  upload(formData)
 }
+
 
 
 ////////////////////
 // RESULT DISPLAY //
 ////////////////////
 
+var page = 'analyze'
+
 const loadingResult = (bool) => {
   button = document.getElementById('submit_button')
 
   if (bool) {
-    document.getElementById('main_result_display').innerHTML = ""
+    document.getElementById(`main_result_display_${page}`).innerHTML = ""
     button.innerHTML = '<div id="spinner" class="spinner-sm spinner-border" role="status"><span class="sr-only">Loading...</span></div>'
   } else {
     button.innerHTML = 'Submit'
@@ -78,11 +102,9 @@ const loadingResult = (bool) => {
 }
 
 const displayResult = (result) => {
-  const display = document.getElementById('main_result_display')
+  txt = `This image is a ${result}`
 
   setTimeout(() => {
-    txt = `This image is a ${result}`
-
     loadingResult(false)
     typeWriter()
   }, 1000);
@@ -99,7 +121,7 @@ var speed = 50;
 
 function typeWriter() {
   if (i < txt.length) {
-    document.getElementById('main_result_display').innerHTML += txt.charAt(i);
+    document.getElementById(`main_result_display_${page}`).innerHTML += txt.charAt(i);
     i++;
     setTimeout(typeWriter, speed);
   } else {
@@ -114,6 +136,9 @@ function typeWriter() {
 random_list = [1,2,3,4,5]
 
 const getRandom = () => {
+  page = 'random'
+  document.getElementById(`main_result_display_${page}`).innerHTML = ""
+
   document.querySelectorAll('.random_content').forEach(el=>el.classList.add('hidden'));
   loader = document.getElementById('random_content_loader')
 
@@ -123,10 +148,12 @@ const getRandom = () => {
     ind = Math.floor(Math.random() * random_list.length)
     target = document.querySelector(`[data-randint="${random_list[ind]}"]`)
     delete random_list[ind];
+    txt = `This is an amazing teacher`
   } else {
     target = document.getElementById('default_random_content')
     target_image = target.querySelector('img')
     target_image.src = "https://thispersondoesnotexist.com?" + new Date().getTime();
+    txt = `This image is a fake`
   }
 
   if (target == null) {
@@ -136,6 +163,7 @@ const getRandom = () => {
   setTimeout(() => {
     loader.classList.add('hidden')
     target.classList.remove('hidden')
+    typeWriter()
   }, 1000);
 
 }
